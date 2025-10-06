@@ -555,4 +555,301 @@ graph TD
 - **Bandwidth Planning:** CDN optimization for global distribution
 - **Processing Capacity:** Auto-scaling based on demand patterns
 
-This comprehensive design document establishes the foundational architecture for the Menantikan platform, providing detailed guidance for implementation while maintaining flexibility for future enhancements and scaling requirements.
+## Action Flow Architecture
+
+### User Journey Workflows
+
+#### Complete Invitation Creation Flow
+```mermaid
+flowchart TD
+    A[User Visits Landing Page] --> B{User Authenticated?}
+    B -->|No| C[Sign Up/Login Flow]
+    B -->|Yes| D[Navigate to Templates]
+    C --> E[Google OAuth Process]
+    E --> F[Create User Profile]
+    F --> D
+    D --> G[Browse Template Gallery]
+    G --> H[Select Template]
+    H --> I[Enter Basic Information]
+    I --> J[Customize Design]
+    J --> K[Add Media Assets]
+    K --> L[Configure RSVP Settings]
+    L --> M[Preview Invitation]
+    M --> N{Satisfied with Result?}
+    N -->|No| O[Return to Editor]
+    O --> J
+    N -->|Yes| P[Publish Invitation]
+    P --> Q[Generate Public URL]
+    Q --> R[Share with Guests]
+    R --> S[Monitor Responses]
+```
+
+#### Guest Interaction Flow
+```mermaid
+flowchart TD
+    A[Guest Receives Invitation Link] --> B[Opens Invitation URL]
+    B --> C[Load Invitation Template]
+    C --> D[Display Event Information]
+    D --> E[Guest Browses Content]
+    E --> F{Background Music Available?}
+    F -->|Yes| G[Auto-play Music]
+    F -->|No| H[Continue Browsing]
+    G --> H
+    H --> I[View Photo Gallery]
+    I --> J[Read Event Details]
+    J --> K{RSVP Required?}
+    K -->|Yes| L[Fill RSVP Form]
+    K -->|No| M[Leave Guestbook Message]
+    L --> N[Submit Response]
+    N --> O[Confirmation Message]
+    O --> M
+    M --> P[Submit Message]
+    P --> Q[Real-time Update]
+    Q --> R[Share on Social Media]
+```
+
+### System Process Flows
+
+#### Template Rendering Process
+```mermaid
+flowchart LR
+    A[Template Request] --> B[Load Template Schema]
+    B --> C[Validate Template Data]
+    C --> D[Apply User Customizations]
+    D --> E[Merge Default Styles]
+    E --> F[Process Media Assets]
+    F --> G[Generate Component Tree]
+    G --> H[Apply Animations]
+    H --> I[Render Final Output]
+    I --> J[Cache Rendered Template]
+    J --> K[Serve to User]
+```
+
+#### Auto-Save Mechanism Flow
+```mermaid
+flowchart TD
+    A[User Makes Change] --> B[Detect Input Change]
+    B --> C[Start Debounce Timer]
+    C --> D{Timer Expires?}
+    D -->|No| E[Reset Timer on New Change]
+    E --> C
+    D -->|Yes| F[Validate Data]
+    F --> G{Validation Passes?}
+    G -->|No| H[Show Error Message]
+    G -->|Yes| I[Save to Firestore]
+    I --> J{Save Successful?}
+    J -->|No| K[Queue for Retry]
+    J -->|Yes| L[Update UI Status]
+    K --> M[Retry with Backoff]
+    M --> I
+    L --> N[Continue Editing]
+    H --> O[Allow User Correction]
+    O --> B
+```
+
+### Authentication & Authorization Flows
+
+#### User Registration Process
+```mermaid
+flowchart TD
+    A[User Clicks Sign Up] --> B[Choose Auth Method]
+    B --> C{Google OAuth?}
+    C -->|Yes| D[Redirect to Google]
+    C -->|No| E[Email/Password Form]
+    D --> F[Google Consent Screen]
+    F --> G[Return with Auth Code]
+    G --> H[Exchange for Token]
+    E --> I[Validate Email Format]
+    I --> J[Check Password Strength]
+    J --> K[Create Account]
+    H --> L[Create User Document]
+    K --> L
+    L --> M[Set User Preferences]
+    M --> N[Redirect to Dashboard]
+    N --> O[Show Welcome Tutorial]
+```
+
+#### Permission Verification Flow
+```mermaid
+flowchart LR
+    A[Request Resource] --> B[Extract User Token]
+    B --> C[Verify Token Validity]
+    C --> D{Token Valid?}
+    D -->|No| E[Return 401 Unauthorized]
+    D -->|Yes| F[Extract User ID]
+    F --> G[Load User Permissions]
+    G --> H{Has Required Permission?}
+    H -->|No| I[Return 403 Forbidden]
+    H -->|Yes| J[Check Resource Ownership]
+    J --> K{Is Owner or Public?}
+    K -->|No| L[Return 403 Forbidden]
+    K -->|Yes| M[Grant Access]
+```
+
+### Data Processing Workflows
+
+#### RSVP Response Processing
+```mermaid
+flowchart TD
+    A[Guest Submits RSVP] --> B[Validate Form Data]
+    B --> C{Validation Passes?}
+    C -->|No| D[Return Error Messages]
+    C -->|Yes| E[Check Duplicate Response]
+    E --> F{Already Responded?}
+    F -->|Yes| G[Update Existing Response]
+    F -->|No| H[Create New Response]
+    G --> I[Log Update Event]
+    H --> J[Log Creation Event]
+    I --> K[Update Invitation Statistics]
+    J --> K
+    K --> L[Send Real-time Update]
+    L --> M[Notify Invitation Owner]
+    M --> N[Send Confirmation Email]
+    N --> O[Update Guest Dashboard]
+    D --> P[Show Validation Errors]
+```
+
+#### Media Upload Processing
+```mermaid
+flowchart LR
+    A[User Selects Media] --> B[Validate File Type]
+    B --> C{Valid Type?}
+    C -->|No| D[Show Error Message]
+    C -->|Yes| E[Check File Size]
+    E --> F{Size Within Limit?}
+    F -->|No| G[Compress Image]
+    F -->|Yes| H[Generate Upload URL]
+    G --> I{Compression Successful?}
+    I -->|No| J[Show Size Error]
+    I -->|Yes| H
+    H --> K[Upload to Firebase Storage]
+    K --> L{Upload Successful?}
+    L -->|No| M[Retry Upload]
+    L -->|Yes| N[Generate Public URL]
+    N --> O[Update Invitation Data]
+    O --> P[Refresh Preview]
+```
+
+### Business Process Flows
+
+#### Subscription Management Flow
+```mermaid
+flowchart TD
+    A[User Upgrades to Premium] --> B[Select Payment Plan]
+    B --> C[Redirect to Payment Gateway]
+    C --> D[Process Payment]
+    D --> E{Payment Successful?}
+    E -->|No| F[Return to Pricing Page]
+    E -->|Yes| G[Update User Subscription]
+    G --> H[Grant Premium Features]
+    H --> I[Send Welcome Email]
+    I --> J[Update UI Permissions]
+    J --> K[Log Subscription Event]
+    F --> L[Show Payment Error]
+    L --> M[Offer Alternative Methods]
+```
+
+#### Template Marketplace Flow
+```mermaid
+flowchart LR
+    A[Designer Submits Template] --> B[Automated Quality Check]
+    B --> C{Passes Basic Checks?}
+    C -->|No| D[Return with Feedback]
+    C -->|Yes| E[Queue for Review]
+    E --> F[Admin Review Process]
+    F --> G{Approved?}
+    G -->|No| H[Rejection with Reasons]
+    G -->|Yes| I[Publish to Marketplace]
+    I --> J[Notify Designer]
+    J --> K[Set Revenue Share]
+    K --> L[Track Usage Analytics]
+    H --> M[Allow Resubmission]
+    D --> M
+```
+
+### Error Handling Workflows
+
+#### Global Error Recovery Flow
+```mermaid
+flowchart TD
+    A[Error Occurs] --> B[Error Boundary Catches]
+    B --> C[Log Error Details]
+    C --> D{Critical Error?}
+    D -->|Yes| E[Show Fallback UI]
+    D -->|No| F[Show Inline Error]
+    E --> G[Offer Recovery Actions]
+    F --> H[Allow User Retry]
+    G --> I{User Chooses Recovery?}
+    I -->|Refresh| J[Reload Application]
+    I -->|Report| K[Submit Bug Report]
+    I -->|Continue| L[Return to Safe State]
+    H --> M{Retry Successful?}
+    M -->|Yes| N[Continue Normal Flow]
+    M -->|No| O[Escalate to Critical]
+    O --> E
+```
+
+#### Network Failure Handling
+```mermaid
+flowchart LR
+    A[Network Request Fails] --> B[Detect Connection Status]
+    B --> C{Device Online?}
+    C -->|No| D[Show Offline Message]
+    C -->|Yes| E[Implement Retry Logic]
+    D --> F[Queue Failed Requests]
+    F --> G[Listen for Connection]
+    G --> H{Connection Restored?}
+    H -->|No| G
+    H -->|Yes| I[Process Queued Requests]
+    E --> J[Exponential Backoff]
+    J --> K{Max Retries Reached?}
+    K -->|No| L[Retry Request]
+    K -->|Yes| M[Show Persistent Error]
+    L --> N{Request Successful?}
+    N -->|Yes| O[Continue Normal Flow]
+    N -->|No| J
+```
+
+### Integration Workflows
+
+#### Email Notification System
+```mermaid
+flowchart TD
+    A[Trigger Event] --> B[Determine Email Type]
+    B --> C[Load Email Template]
+    C --> D[Personalize Content]
+    D --> E[Validate Recipient]
+    E --> F{Valid Email?}
+    F -->|No| G[Log Invalid Email]
+    F -->|Yes| H[Queue for Sending]
+    H --> I[Send via Email Service]
+    I --> J{Send Successful?}
+    J -->|No| K[Retry with Delay]
+    J -->|Yes| L[Log Success]
+    K --> M{Max Retries?}
+    M -->|No| I
+    M -->|Yes| N[Mark as Failed]
+    L --> O[Update Delivery Status]
+    G --> P[Notify Admin]
+    N --> P
+```
+
+#### Social Media Sharing Flow
+```mermaid
+flowchart LR
+    A[User Clicks Share] --> B[Select Platform]
+    B --> C[Generate Share URL]
+    C --> D[Create Meta Tags]
+    D --> E[Generate Preview Image]
+    E --> F[Open Share Dialog]
+    F --> G{User Confirms?}
+    G -->|No| H[Cancel Share]
+    G -->|Yes| I[Post to Platform]
+    I --> J{Post Successful?}
+    J -->|No| K[Show Error Message]
+    J -->|Yes| L[Track Share Event]
+    L --> M[Update Analytics]
+    K --> N[Offer Alternative Methods]
+```
+
+These comprehensive action flows provide detailed guidance for implementing the user interactions, system processes, and business workflows throughout the Menantikan platform, ensuring consistent and reliable user experiences across all features and scenarios.
