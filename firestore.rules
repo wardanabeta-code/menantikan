@@ -1,0 +1,134 @@
+// Firestore security rules for Menantikan platform
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+    
+    function isValidEmail(email) {
+      return email.matches('.*@.*\\..*');
+    }
+    
+    function isValidInvitationData() {
+      let data = request.resource.data;
+      return data.keys().hasAll(['ownerUid', 'templateId', 'title', 'status']) &&
+             data.ownerUid is string &&
+             data.templateId is string &&
+             data.title is string &&
+             data.status in ['draft', 'published', 'archived'];
+    }
+    
+    function isValidRSVPData() {
+      let data = request.resource.data;
+      return data.keys().hasAll(['guestName', 'attendanceStatus']) &&
+             data.guestName is string &&
+             data.guestName.size() >= 2 &&
+             data.attendanceStatus in ['attending', 'not-attending', 'maybe'];
+    }
+    
+    function isValidGuestbookData() {
+      let data = request.resource.data;
+      return data.keys().hasAll(['authorName', 'message']) &&
+             data.authorName is string &&
+             data.authorName.size() >= 2 &&
+             data.message is string &&
+             data.message.size() >= 1 &&
+             data.message.size() <= 1000;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+      allow create: if isAuthenticated() && 
+                       request.auth.uid == userId &&
+                       request.resource.data.keys().hasAll(['uid', 'email']) &&
+                       request.resource.data.uid == userId &&
+                       isValidEmail(request.resource.data.email);
+    }
+
+    // Templates collection (read-only for users)
+    match /templates/{templateId} {
+      allow read: if true; // Public read access
+      allow write: if false; // Only admins can write (handled via admin SDK)
+    }
+
+    // Invitations collection
+    match /invitations/{invitationId} {
+      // Owner permissions
+      allow read, write: if isAuthenticated() && 
+                            resource.data.ownerUid == request.auth.uid;
+      
+      // Create new invitation
+      allow create: if isAuthenticated() && 
+                       isValidInvitationData() &&
+                       request.resource.data.ownerUid == request.auth.uid;
+      
+      // Public read access for published invitations
+      allow read: if resource.data.status == 'published';
+      
+      // Analytics update (for view tracking)
+      allow update: if resource.data.status == 'published' &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['analytics', 'updatedAt']) &&
+                       request.resource.data.analytics.views >= resource.data.analytics.views;
+
+      // RSVP subcollection
+      match /rsvps/{rsvpId} {
+        // Anyone can submit RSVP for published invitations
+        allow create: if get(/databases/$(database)/documents/invitations/$(invitationId)).data.status == 'published' &&
+                         isValidRSVPData();
+        
+        // Owner can read all RSVPs
+        allow read: if isAuthenticated() && 
+                       get(/databases/$(database)/documents/invitations/$(invitationId)).data.ownerUid == request.auth.uid;
+        
+        // Guests can read their own RSVP
+        allow read: if resource.data.guestEmail == request.auth.token.email;
+        
+        // No updates or deletes for RSVPs (immutable after submission)
+        allow update, delete: if false;
+      }
+
+      // Guestbook subcollection
+      match /guestbook/{entryId} {
+        // Anyone can submit guestbook entries for published invitations
+        allow create: if get(/databases/$(database)/documents/invitations/$(invitationId)).data.status == 'published' &&
+                         isValidGuestbookData();
+        
+        // Public read access for approved entries
+        allow read: if resource.data.moderationStatus == 'approved';
+        
+        // Owner can read all entries and update moderation status
+        allow read: if isAuthenticated() && 
+                       get(/databases/$(database)/documents/invitations/$(invitationId)).data.ownerUid == request.auth.uid;
+        
+        allow update: if isAuthenticated() && 
+                         get(/databases/$(database)/documents/invitations/$(invitationId)).data.ownerUid == request.auth.uid &&
+                         request.resource.data.diff(resource.data).affectedKeys()
+                           .hasOnly(['moderationStatus', 'updatedAt']) &&
+                         request.resource.data.moderationStatus in ['approved', 'rejected'];
+        
+        // No deletes for guestbook entries
+        allow delete: if false;
+      }
+    }
+
+    // Analytics collection (for aggregated data)
+    match /analytics/{document=**} {
+      allow read: if isAuthenticated();
+      allow write: if false; // Only server-side functions can write
+    }
+
+    // Default deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,6 +1,50 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Menantikan Design System Variables */
+:root {
+  /* Custom spacing scale for invitations */
+  --spacing-invitation-xs: 0.5rem;
+  --spacing-invitation-sm: 1rem;
+  --spacing-invitation-md: 2rem;
+  --spacing-invitation-lg: 3rem;
+  --spacing-invitation-xl: 4rem;
+  --spacing-invitation-2xl: 6rem;
+  
+  /* Typography scale for invitations */
+  --font-heading: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-script: 'Dancing Script', cursive;
+  --font-serif: 'Playfair Display', serif;
+  
+  /* Animation durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  
+  /* Z-index scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  
+  /* Template-specific variables (can be overridden) */
+  --template-primary-hue: 340;
+  --template-primary-saturation: 75%;
+  --template-primary-lightness: 55%;
+  
+  --template-secondary-hue: 220;
+  --template-secondary-saturation: 13%;
+  --template-secondary-lightness: 18%;
+  
+  --template-accent-hue: 45;
+  --template-accent-saturation: 93%;
+  --template-accent-lightness: 47%;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -116,5 +160,165 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-md;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Animation utilities */
+.animate-fade-in {
+  animation: fadeIn var(--duration-normal) ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp var(--duration-normal) ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--duration-normal) ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Template dynamic theming */
+.template-theme {
+  --primary: hsl(var(--template-primary-hue) var(--template-primary-saturation) var(--template-primary-lightness));
+  --primary-foreground: hsl(var(--template-primary-hue) var(--template-primary-saturation) 98%);
+  
+  --secondary: hsl(var(--template-secondary-hue) var(--template-secondary-saturation) var(--template-secondary-lightness));
+  --secondary-foreground: hsl(var(--template-secondary-hue) var(--template-secondary-saturation) 98%);
+  
+  --accent: hsl(var(--template-accent-hue) var(--template-accent-saturation) var(--template-accent-lightness));
+  --accent-foreground: hsl(var(--template-accent-hue) var(--template-accent-saturation) 98%);
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  * {
+    color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-float {
+    animation: none;
+  }
+}
+
+/* Invitation View Styles */
+.invitation-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.recipient-view {
+  max-width: 100%;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+}
+
+.template-preview-container {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .recipient-view {
+    box-shadow: none;
+  }
+  
+  .template-preview-container {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   }
 }
