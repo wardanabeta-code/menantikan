@@ -129,11 +129,18 @@ const GallerySectionForm: React.FC<GallerySectionFormProps> = ({ data, onChange,
                   <X className="w-4 h-4" />
                 </button>
                 <div className="aspect-square bg-gray-100 rounded-md mb-2 overflow-hidden">
-                  <img 
-                    src={image.url} 
-                    alt={image.caption || `Gallery image ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+                  {/* Only render img tag if we have a valid URL */}
+                  {image.url && image.url.trim() !== '' ? (
+                    <img 
+                      src={image.url} 
+                      alt={image.caption || `Gallery image ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-200">
+                      <Image className="w-8 h-8 text-gray-400" />
+                    </div>
+                  )}
                 </div>
                 <input
                   type="text"

@@ -18,6 +18,8 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({
   isPreview = false,
   onSubmit
 }) => {
+  console.log('RSVPSection rendering with:', { config, sectionConfig, isPreview });
+  
   const [formData, setFormData] = useState<RSVPFormData>({
     guestName: '',
     guestEmail: '',
@@ -69,33 +71,47 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({
       <section className="py-16 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
             className="bg-white rounded-lg shadow-lg p-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
-            <div 
+            <motion.div 
               className="w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center"
               style={{ backgroundColor: config.colors?.accent || 'var(--color-accent)' }}
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.1 }}
             >
               <Check className="w-8 h-8 text-white" />
-            </div>
-            <h3 
+            </motion.div>
+            <motion.h3 
               className="text-2xl font-bold mb-4"
               style={{
                 color: config.colors?.text || 'var(--color-foreground)',
                 fontFamily: config.typography?.headingFont || 'var(--font-heading)'
               }}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.2 }}
             >
               Thank You!
-            </h3>
-            <p 
+            </motion.h3>
+            <motion.p 
               style={{
                 color: config.colors?.textSecondary || 'var(--color-muted-foreground)',
                 fontFamily: config.typography?.bodyFont || 'var(--font-body)'
               }}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.3 }}
             >
               Your RSVP has been submitted successfully. We can't wait to celebrate with you!
-            </p>
+            </motion.p>
           </motion.div>
         </div>
       </section>
@@ -107,45 +123,64 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({
       <div className="max-w-2xl mx-auto">
         {/* Section Title */}
         <motion.div
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          transition={{ duration: 0.5 }}
         >
-          <h2 
+          <motion.h2 
             className="text-3xl md:text-4xl font-bold mb-4"
             style={{
               color: config.colors?.text || 'var(--color-foreground)',
               fontFamily: config.typography?.headingFont || 'var(--font-heading)'
             }}
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           >
             RSVP
-          </h2>
-          <p 
+          </motion.h2>
+          <motion.p 
             className="text-lg mb-6"
             style={{
               color: config.colors?.textSecondary || 'var(--color-muted-foreground)',
               fontFamily: config.typography?.bodyFont || 'var(--font-body)'
             }}
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.2 }}
           >
             Please let us know if you'll be joining us
-          </p>
-          <div 
+          </motion.p>
+          <motion.div 
             className="w-24 h-px mx-auto"
             style={{ backgroundColor: config.colors?.accent || 'var(--color-accent)' }}
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           />
         </motion.div>
 
         {/* RSVP Form */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          className="bg-white rounded-lg shadow-lg p-8"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-white rounded-lg shadow-lg p-8"
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Attendance Status */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.3 }}
+            >
               <label className="block text-sm font-medium mb-3">
                 Will you be attending?
               </label>
@@ -173,11 +208,22 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({
                   </button>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Guest Information */}
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
+            <motion.div 
+              className="grid md:grid-cols-2 gap-4"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.4 }}
+            >
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.5 }}
+              >
                 <label htmlFor="guestName" className="block text-sm font-medium mb-2">
                   <User className="inline w-4 h-4 mr-1" />
                   Full Name *
@@ -193,9 +239,14 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({
                     '--tw-ring-color': config.colors?.accent || 'var(--color-accent)' 
                   } as React.CSSProperties}
                 />
-              </div>
+              </motion.div>
               
-              <div>
+              <motion.div
+                initial={{ opacity: 0, x: 10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.6 }}
+              >
                 <label htmlFor="guestEmail" className="block text-sm font-medium mb-2">
                   <Mail className="inline w-4 h-4 mr-1" />
                   Email
@@ -207,12 +258,17 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({
                   onChange={(e) => handleInputChange('guestEmail', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent"
                 />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Plus Ones */}
             {formData.attendanceStatus === 'attending' && (
-              <div>
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.7 }}
+              >
                 <label htmlFor="plusOnes" className="block text-sm font-medium mb-2">
                   <Users className="inline w-4 h-4 mr-1" />
                   Number of additional guests
@@ -227,11 +283,16 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({
                     <option key={num} value={num}>{num}</option>
                   ))}
                 </select>
-              </div>
+              </motion.div>
             )}
 
             {/* Message */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.8 }}
+            >
               <label htmlFor="message" className="block text-sm font-medium mb-2">
                 <MessageSquare className="inline w-4 h-4 mr-1" />
                 Message (optional)
@@ -244,26 +305,39 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent"
                 placeholder="Any special message or note..."
               />
-            </div>
+            </motion.div>
 
             {/* Submit Button */}
-            <Button
-              type="submit"
-              disabled={isSubmitting || isPreview}
-              className="w-full"
-              size="lg"
-              style={{
-                backgroundColor: config.colors?.accent || 'var(--color-accent)',
-                color: 'white'
-              }}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.9 }}
             >
-              {isSubmitting ? 'Submitting...' : 'Submit RSVP'}
-            </Button>
+              <Button
+                type="submit"
+                disabled={isSubmitting || isPreview}
+                className="w-full"
+                size="lg"
+                style={{
+                  backgroundColor: config.colors?.accent || 'var(--color-accent)',
+                  color: 'white'
+                }}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit RSVP'}
+              </Button>
+            </motion.div>
 
             {isPreview && (
-              <p className="text-center text-sm text-gray-500">
+              <motion.p 
+                className="text-center text-sm text-gray-500"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 1.0 }}
+              >
                 This is a preview - RSVP submissions are disabled
-              </p>
+              </motion.p>
             )}
           </form>
         </motion.div>

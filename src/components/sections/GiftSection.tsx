@@ -48,77 +48,73 @@ const GiftSection: React.FC<GiftSectionProps> = ({
   };
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 w-full max-w-full overflow-x-hidden box-border" style={{ overflow: 'hidden' }}>
+      <div className="max-w-4xl mx-auto max-w-full overflow-x-hidden box-border" style={{ overflow: 'hidden' }}>
         {/* Section Title with decorative elements */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-16 relative"
         >
           <motion.h2 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.4 }}
             className="text-3xl md:text-4xl font-bold mb-6 relative z-10"
             style={{
-              color: config.colors?.primary || '#333',
-              fontFamily: config.typography?.headingFont || 'Playfair Display'
+              color: config.colors?.primary || 'var(--color-primary)',
+              fontFamily: config.typography?.headingFont || 'var(--font-heading)'
             }}
-            viewport={{ once: true }}
           >
-            {giftContent.title || 'Amplop Digital & Hadiah'}
+            Amplop Digital & Hadiah
           </motion.h2>
           
-          {giftContent.subtitle && (
-            <motion.p 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="text-lg mb-8 max-w-2xl mx-auto relative z-10"
-              style={{
-                color: config.colors?.textSecondary || '#666',
-                fontFamily: config.typography?.bodyFont || 'Inter'
-              }}
-              viewport={{ once: true }}
-            >
-              {giftContent.subtitle}
-            </motion.p>
-          )}
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="text-lg mb-8 max-w-2xl mx-auto relative z-10"
+            style={{
+              color: config.colors?.textSecondary || 'var(--color-muted-foreground)',
+              fontFamily: config.typography?.bodyFont || 'var(--font-body)'
+            }}
+          >
+            Kehadiran Anda adalah hadiah terbesar bagi kami
+          </motion.p>
           
           {/* Decorative divider */}
           <motion.div 
             initial={{ opacity: 0, scaleX: 0 }}
             whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="w-24 h-1 mx-auto rounded-full relative z-10"
-            style={{ backgroundColor: config.colors?.accent || '#d4af37' }}
-            viewport={{ once: true }}
+            style={{ backgroundColor: config.colors?.accent || 'var(--color-accent)' }}
           />
         </motion.div>
 
         {/* Message */}
-        {(giftContent.message || !giftContent.title) && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-center mb-16"
+        >
+          <p 
+            className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed"
+            style={{
+              color: config.colors?.text || 'var(--color-foreground)',
+              fontFamily: config.typography?.bodyFont || 'var(--font-body)'
+            }}
           >
-            <p 
-              className="text-base md:text-lg max-w-3xl mx-auto leading-relaxed"
-              style={{
-                color: config.colors?.text || '#000000',
-                fontFamily: config.typography?.bodyFont || 'Inter'
-              }}
-            >
-              {giftContent.message || 'Kami sangat bersyukur atas doa dan dukungan Anda. Jika Anda ingin memberikan hadiah, berikut adalah beberapa cara untuk melakukannya:'}
-            </p>
-          </motion.div>
-        )}
+            Kami sangat bersyukur atas doa dan dukungan Anda. Jika Anda ingin memberikan hadiah, berikut adalah beberapa cara untuk melakukannya:
+          </p>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Bank Accounts with enhanced styling */}
@@ -126,12 +122,8 @@ const GiftSection: React.FC<GiftSectionProps> = ({
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.4 }}
-              whileHover={{ 
-                y: -8,
-                transition: { duration: 0.3 }
-              }}
-              viewport={{ once: true, margin: "-50px" }}
               className="rounded-2xl p-8 relative overflow-hidden"
               style={{ 
                 backgroundColor: config.colors?.background || '#ffffff',
@@ -156,9 +148,9 @@ const GiftSection: React.FC<GiftSectionProps> = ({
               <div className="flex items-center mb-8 relative z-10">
                 <div 
                   className="w-14 h-14 rounded-full flex items-center justify-center mr-4"
-                  style={{ backgroundColor: config.colors?.accent + '20' || '#f0f0f0' }}
+                  style={{ backgroundColor: config.colors?.accent + '20' || 'var(--color-accent)' + '20' }}
                 >
-                  <CreditCard className="w-7 h-7" style={{ color: config.colors?.accent || '#d4af37' }} />
+                  <CreditCard className="w-7 h-7" style={{ color: config.colors?.accent || 'var(--color-accent)' }} />
                 </div>
                 <h3 
                   className="text-2xl font-bold"
@@ -177,14 +169,10 @@ const GiftSection: React.FC<GiftSectionProps> = ({
                     key={account.id}
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
-                    whileHover={{ 
-                      x: 8,
-                      transition: { duration: 0.2 }
-                    }}
                     className="border rounded-xl p-6 cursor-pointer hover:border-gray-300 transition-all duration-200 relative"
                     style={{ borderColor: config.colors?.accent + '30' || '#e0e0e0' }}
-                    viewport={{ once: true }}
                   >
                     <div className="flex items-center justify-between mb-4">
                       <h4 
@@ -222,7 +210,7 @@ const GiftSection: React.FC<GiftSectionProps> = ({
                             {copiedAccount === `bank-${account.id}` ? (
                               <Check className="w-4 h-4 text-green-600" />
                             ) : (
-                              <Copy className="w-4 h-4" style={{ color: config.colors?.textSecondary || '#666' }} />
+                              <Copy className="w-4 h-4" style={{ color: config.colors?.textSecondary || 'var(--color-muted-foreground)' }} />
                             )}
                           </button>
                         </div>
@@ -254,12 +242,8 @@ const GiftSection: React.FC<GiftSectionProps> = ({
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.4 }}
-              whileHover={{ 
-                y: -8,
-                transition: { duration: 0.3 }
-              }}
-              viewport={{ once: true, margin: "-50px" }}
               className="rounded-2xl p-8 relative overflow-hidden"
               style={{ 
                 backgroundColor: config.colors?.background || '#ffffff',
@@ -286,7 +270,7 @@ const GiftSection: React.FC<GiftSectionProps> = ({
                   className="w-14 h-14 rounded-full flex items-center justify-center mr-4"
                   style={{ backgroundColor: config.colors?.accent + '20' || '#f0f0f0' }}
                 >
-                  <Smartphone className="w-7 h-7" style={{ color: config.colors?.accent || '#d4af37' }} />
+                  <Smartphone className="w-7 h-7" style={{ color: config.colors?.accent || 'var(--color-accent)' }} />
                 </div>
                 <h3 
                   className="text-2xl font-bold"
@@ -305,14 +289,10 @@ const GiftSection: React.FC<GiftSectionProps> = ({
                     key={ewallet.id}
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
-                    whileHover={{ 
-                      x: 8,
-                      transition: { duration: 0.2 }
-                    }}
                     className="border rounded-xl p-6 cursor-pointer hover:border-gray-300 transition-all duration-200 relative"
                     style={{ borderColor: config.colors?.accent + '30' || '#e0e0e0' }}
-                    viewport={{ once: true }}
                   >
                     <div className="flex items-center justify-between mb-4">
                       <h4 
@@ -325,7 +305,7 @@ const GiftSection: React.FC<GiftSectionProps> = ({
                         {ewallet.provider}
                       </h4>
                       {ewallet.qrCodeUrl && (
-                        <QrCode className="w-6 h-6" style={{ color: config.colors?.accent || '#d4af37' }} />
+                        <QrCode className="w-6 h-6" style={{ color: config.colors?.accent || 'var(--color-accent)' }} />
                       )}
                     </div>
                     
@@ -354,7 +334,7 @@ const GiftSection: React.FC<GiftSectionProps> = ({
                               {copiedAccount === `ewallet-${ewallet.id}` ? (
                                 <Check className="w-4 h-4 text-green-600" />
                               ) : (
-                                <Copy className="w-4 h-4" style={{ color: config.colors?.textSecondary || '#666' }} />
+                                <Copy className="w-4 h-4" style={{ color: config.colors?.textSecondary || 'var(--color-muted-foreground)' }} />
                               )}
                             </button>
                           </div>
@@ -388,12 +368,8 @@ const GiftSection: React.FC<GiftSectionProps> = ({
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            whileHover={{ 
-              y: -8,
-              transition: { duration: 0.3 }
-            }}
-            viewport={{ once: true, margin: "-50px" }}
             className="mt-12 rounded-2xl p-8 relative overflow-hidden"
             style={{ 
               backgroundColor: config.colors?.background || '#ffffff',

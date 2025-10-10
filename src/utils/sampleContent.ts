@@ -4,14 +4,12 @@ import type { InvitationContent, HeroContent, StoryContent, EventDetails, Galler
 export const generateSampleContent = (templateId: string): InvitationContent => {
   const baseContent: InvitationContent = {
     heroSection: {
-      title: 'Dengan Hormat, Kami Mengundang Bapak/Ibu/Saudara/i',
-      subtitle: 'Untuk Menghadiri Resepsi Pernikahan Kami',
       coupleNames: ['Pengantin Pria', 'Pengantin Wanita']
     },
     eventDetails: {
       ceremony: {
         name: 'Acara Pernikahan',
-        date: new Date('2024-07-15T10:00:00'),
+        date: '2024-07-15T10:00:00',
         time: '10:00 WIB',
         venue: 'Gedung Pernikahan Indah',
         address: 'Jl. Cinta Sejati No. 123, Jakarta Selatan'
@@ -27,12 +25,9 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
       return {
         ...baseContent,
         heroSection: {
-          title: 'Dengan Hormat, Kami Mengundang Bapak/Ibu/Saudara/i',
-          subtitle: 'Untuk Menghadiri Resepsi Pernikahan Kami',
           coupleNames: ['Budi Santoso', 'Ani Putri']
         },
         brideGroomDetailsSection: {
-          title: 'Mempelai',
           bride: {
             fullName: 'Anindya Putri Handayani',
             nickname: 'Ani',
@@ -55,7 +50,6 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
           }
         },
         storySection: {
-          title: 'Kisah Cinta Kami',
           timeline: [
             {
               id: '1',
@@ -65,7 +59,7 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
               image: '' // Using decorative placeholder instead of actual image
             },
             {
-              id: '2',
+              id: '2', 
               date: 'Musim Panas 2020',
               title: 'Kencan Pertama',
               description: 'Kencan resmi pertama kami adalah piknik di Taman Suropati. Kami menghabiskan berjam-jam berbicara di bawah bintang-bintang dan tahu ini adalah sesuatu yang istimewa.',
@@ -90,7 +84,7 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
         eventDetails: {
           ceremony: {
             name: 'Akad Nikah',
-            date: new Date('2024-06-15T10:00:00'),
+            date: '2024-06-15T10:00:00',
             time: '10:00 WIB',
             venue: 'Masjid Al-Ikhlas',
             address: 'Jl. Kebahagiaan No. 45, Jakarta Selatan 12345',
@@ -103,7 +97,7 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
           },
           reception: {
             name: 'Resepsi Pernikahan',
-            date: new Date('2024-06-15T13:00:00'),
+            date: '2024-06-15T13:00:00',
             time: '13:00 - 17:00 WIB',
             venue: 'Ballroom Grand Palace',
             address: 'Jl. Resepsi Indah No. 67, Jakarta Selatan 12346',
@@ -116,14 +110,12 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
           }
         },
         sacredTextSection: {
-          title: 'Ayat Suci',
           text: 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu merasa tenang dan tentram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir.',
           source: 'QS. Ar-Rum: 21',
           isIslamic: true,
           reference: 'Al-Qur\'an'
         },
         gallerySection: {
-          title: 'Perjalanan Kami Bersama',
           images: [
             {
               id: '1',
@@ -177,9 +169,6 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
           layout: 'masonry'
         },
         giftSection: {
-          title: 'Amplop Digital & Hadiah',
-          subtitle: 'Kehadiran Anda adalah hadiah terbesar bagi kami',
-          message: 'Kami sangat bersyukur atas doa dan dukungan Anda. Jika Anda ingin memberikan kontribusi untuk awal baru kami atau mengirimkan hadiah, berikut adalah detailnya:',
           showBankAccounts: true,
           showEwallets: true,
           showShippingAddress: true,
@@ -229,22 +218,14 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
           }
         },
         countdownSection: {
-          title: 'Hitung Mundur Acara',
-          targetEvent: 'ceremony',
-          message: 'Kami menantikan kehadiran Anda di hari istimewa kami'
+          targetEvent: 'ceremony'
         },
         wishesSection: {
-          title: 'Ucapan & Doa',
-          subtitle: 'Kirimi kami doa dan ucapan terbaik untuk hari istimewa kami',
-          message: 'Setiap ucapan dan doa dari Anda sangat berarti bagi kami. Terima kasih sudah meluangkan waktu untuk mengirimkan pesan terbaik.',
           showForm: true,
           showEntries: true,
           entriesPerPage: 4
         },
         closingSection: {
-          title: 'Penutup',
-          message: 'Merupakan suatu kehormatan dan kebahagiaan bagi kami, apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu kepada kami.',
-          gratitudeMessage: 'Tanpa kehadiran dan doa restu dari keluarga serta sahabat sekalian, pernikahan kami bukanlah apa-apa. Terima kasih telah menjadi bagian dari hari bahagia kami.',
           includeThankYou: true,
           signatureNames: ['Budi Santoso', 'Ani Putri']
         }
@@ -254,14 +235,12 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
       return {
         ...baseContent,
         heroSection: {
-          title: 'Anda Diundang!',
-          subtitle: 'Bergabunglah dalam perayaan ulang tahun',
           coupleNames: ['Ulang Tahun Emma yang ke-25']
         },
         eventDetails: {
           ceremony: {
             name: 'Pesta Ulang Tahun',
-            date: new Date('2024-06-20T19:00:00'),
+            date: '2024-06-20T19:00:00',
             time: '19:00 WIB',
             venue: 'Ballroom Pesta',
             address: 'Jl. Kebahagiaan No. 789, Kota Perayaan',
@@ -269,7 +248,6 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
           }
         },
         gallerySection: {
-          title: 'Kenangan Ulang Tahun',
           images: [
             {
               id: '1',
@@ -290,14 +268,12 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
       return {
         ...baseContent,
         heroSection: {
-          title: 'Anda Diundang',
-          subtitle: 'untuk menghadiri acara perusahaan kami',
           coupleNames: ['Konferensi Tahunan 2024']
         },
         eventDetails: {
           ceremony: {
             name: 'Konferensi Perusahaan',
-            date: new Date('2024-08-10T09:00:00'),
+            date: '2024-08-10T09:00:00',
             time: '09:00 WIB',
             venue: 'Pusat Konferensi',
             address: 'Jl. Bisnis No. 100, Kota Metro',
@@ -308,6 +284,41 @@ export const generateSampleContent = (templateId: string): InvitationContent => 
       };
 
     default:
-      return baseContent;
+      // Return base content with additional default sections to ensure something is rendered
+      return {
+        ...baseContent,
+        storySection: {
+          timeline: [
+            {
+              id: '1',
+              date: '2020',
+              title: 'First Meeting',
+              description: 'Our journey began when we first met at a coffee shop.'
+            },
+            {
+              id: '2',
+              date: '2022',
+              title: 'Engagement',
+              description: 'He proposed to me under the stars on a warm summer night.'
+            }
+          ]
+        },
+        eventDetails: {
+          ceremony: {
+            name: 'Akad Nikah',
+            date: '2024-06-15T10:00:00',
+            time: '10:00 WIB',
+            venue: 'Masjid Al-Ikhlas',
+            address: 'Jl. Kebahagiaan No. 45, Jakarta Selatan 12345'
+          },
+          reception: {
+            name: 'Resepsi Pernikahan',
+            date: '2024-06-15T13:00:00',
+            time: '13:00 - 17:00 WIB',
+            venue: 'Ballroom Grand Palace',
+            address: 'Jl. Resepsi Indah No. 67, Jakarta Selatan 12346'
+          }
+        }
+      };
   }
 };

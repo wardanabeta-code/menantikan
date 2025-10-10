@@ -41,8 +41,8 @@ const MapSection: React.FC<MapSectionProps> = ({
     : `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(mainEvent.address)}&zoom=15`;
 
   return (
-    <section className="py-16 px-4">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-16 px-4 w-full max-w-full overflow-x-hidden box-border">
+      <div className="max-w-6xl mx-auto max-w-full overflow-x-hidden box-border">
         {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -50,18 +50,26 @@ const MapSection: React.FC<MapSectionProps> = ({
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 
+          <motion.h2 
             className="text-3xl md:text-4xl font-bold mb-4"
             style={{
               color: config.colors?.text || 'var(--color-foreground)',
               fontFamily: config.typography?.headingFont || 'var(--font-heading)'
             }}
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           >
             Location
-          </h2>
-          <div 
+          </motion.h2>
+          <motion.div 
             className="w-24 h-px mx-auto"
             style={{ backgroundColor: config.colors?.accent || 'var(--color-accent)' }}
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           />
         </motion.div>
 
@@ -73,47 +81,73 @@ const MapSection: React.FC<MapSectionProps> = ({
             viewport={{ once: true }}
             className="space-y-6"
           >
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 
+            <motion.div 
+              className="bg-white rounded-lg shadow-lg p-6"
+            >
+              <motion.h3 
                 className="text-2xl font-bold mb-4"
                 style={{
                   color: config.colors?.text || 'var(--color-foreground)',
                   fontFamily: config.typography?.headingFont || 'var(--font-heading)'
                 }}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.1 }}
               >
                 {mainEvent.name}
-              </h3>
+              </motion.h3>
 
               <div className="space-y-4">
-                <div className="flex items-start space-x-3">
+                <motion.div 
+                  className="flex items-start space-x-3"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: 0.2 }}
+                >
                   <MapPin 
                     className="w-5 h-5 mt-1 flex-shrink-0"
                     style={{ color: config.colors?.accent || 'var(--color-accent)' }}
                   />
                   <div>
-                    <p 
+                    <motion.p 
                       className="font-medium mb-1"
                       style={{
                         color: config.colors?.text || 'var(--color-foreground)',
                         fontFamily: config.typography?.bodyFont || 'var(--font-body)'
                       }}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: 0.3 }}
                     >
                       {mainEvent.venue}
-                    </p>
-                    <p 
+                    </motion.p>
+                    <motion.p 
                       className="text-sm"
                       style={{
                         color: config.colors?.textSecondary || 'var(--color-muted-foreground)',
                         fontFamily: config.typography?.bodyFont || 'var(--font-body)'
                       }}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: 0.4 }}
                     >
                       {mainEvent.address}
-                    </p>
+                    </motion.p>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                <motion.div 
+                  className="flex flex-col sm:flex-row gap-3 pt-4"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: 0.5 }}
+                >
                   <Button
                     onClick={() => window.open(getGoogleMapsUrl(mainEvent.address, mainEvent.coordinates), '_blank')}
                     variant="outline"
@@ -138,49 +172,73 @@ const MapSection: React.FC<MapSectionProps> = ({
                     <Navigation className="w-4 h-4 mr-2" />
                     Get Directions
                   </Button>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Additional Events */}
             {(content.ceremony && content.reception && content.ceremony !== mainEvent) && (
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h4 
+              <motion.div 
+                className="bg-white rounded-lg shadow-lg p-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.6 }}
+              >
+                <motion.h4 
                   className="text-lg font-semibold mb-3"
                   style={{
                     color: config.colors?.text || 'var(--color-foreground)',
                     fontFamily: config.typography?.headingFont || 'var(--font-heading)'
                   }}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: 0.7 }}
                 >
                   Additional Location
-                </h4>
-                <div className="flex items-start space-x-3">
+                </motion.h4>
+                <motion.div 
+                  className="flex items-start space-x-3"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: 0.8 }}
+                >
                   <MapPin 
                     className="w-4 h-4 mt-1 flex-shrink-0"
                     style={{ color: config.colors?.accent || 'var(--color-accent)' }}
                   />
                   <div>
-                    <p 
+                    <motion.p 
                       className="font-medium"
                       style={{
                         color: config.colors?.text || 'var(--color-foreground)',
                         fontFamily: config.typography?.bodyFont || 'var(--font-body)'
                       }}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: 0.9 }}
                     >
                       {content.ceremony.name} - {content.ceremony.venue}
-                    </p>
-                    <p 
+                    </motion.p>
+                    <motion.p 
                       className="text-sm"
                       style={{
                         color: config.colors?.textSecondary || 'var(--color-muted-foreground)',
                         fontFamily: config.typography?.bodyFont || 'var(--font-body)'
                       }}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: 1.0 }}
                     >
                       {content.ceremony.address}
-                    </p>
+                    </motion.p>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             )}
           </motion.div>
 
@@ -242,23 +300,31 @@ const MapSection: React.FC<MapSectionProps> = ({
             viewport={{ once: true }}
             className="mt-8 bg-white rounded-lg shadow-lg p-6"
           >
-            <h4 
+            <motion.h4 
               className="text-lg font-semibold mb-3"
               style={{
                 color: config.colors?.text || 'var(--color-foreground)',
                 fontFamily: config.typography?.headingFont || 'var(--font-heading)'
               }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.1 }}
             >
               Additional Information
-            </h4>
-            <p 
+            </motion.h4>
+            <motion.p 
               style={{
                 color: config.colors?.textSecondary || 'var(--color-muted-foreground)',
                 fontFamily: config.typography?.bodyFont || 'var(--font-body)'
               }}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.2 }}
             >
               {mainEvent.notes}
-            </p>
+            </motion.p>
           </motion.div>
         )}
       </div>

@@ -1,5 +1,6 @@
-import React, { Suspense, lazy, ComponentType } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
+import type { ComponentType } from 'react';
 
 interface LazySectionProps {
   component: () => Promise<{ default: ComponentType<any> }>;
@@ -115,9 +116,11 @@ export const createLazySection = (componentPath: string) => {
 
 // Pre-defined lazy section loaders
 export const lazyLoaders = {
-  hero: () => import('../sections/HeroSection'),
-  story: () => import('../sections/StorySection'),
-  rsvp: () => import('../sections/RSVPSection'),
-  gallery: () => import('../sections/GallerySection'),
-  guestbook: () => import('../sections/GuestbookSection')
+  hero: () => import('./sections/HeroSection'),
+  story: () => import('./sections/StorySection'),
+  'wishes-messages': () => import('./sections/WishesMessagesSection'),
+  gallery: () => import('./sections/GallerySection'),
+  // Deprecated sections - mapped to the new unified section
+  rsvp: () => import('./sections/WishesMessagesSection'),
+  guestbook: () => import('./sections/WishesMessagesSection')
 };

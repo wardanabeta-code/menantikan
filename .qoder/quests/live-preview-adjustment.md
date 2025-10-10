@@ -22,6 +22,16 @@ Currently, there are discrepancies between the live preview in the Invitation Ed
 3. **Styling Inconsistencies:** Different approaches to applying template configurations and custom themes
 4. **Section Visibility Handling:** Different mechanisms for showing/hiding sections
 
+### Template Preview Context
+
+It's important to note that there are actually three preview contexts in the application:
+
+1. **Editor Live Preview:** The mobile preview panel within the invitation editor
+2. **Template Preview:** The preview shown when browsing templates in the gallery
+3. **Full-Screen Preview:** The recipient view when viewing an invitation
+
+All three previews should be consistent with each other to provide a seamless user experience.
+
 ## Architecture
 
 The current architecture has two separate preview implementations:
@@ -34,15 +44,17 @@ The current architecture has two separate preview implementations:
 2. **Different Data Sources:** EditorPreview uses formData directly while InvitationViewPage uses sampleContent or actual invitation data
 3. **Inconsistent Text Display:** Hero section shows different text in each preview
 4. **Theming Differences:** Different approaches to applying template configurations
+5. **Template Preview Discrepancies:** TemplatePreviewPage has its own rendering logic that may differ from both editor and full-screen previews
 
 ### Solution Approach
 
-To achieve consistency, we will:
-1. Refactor both preview components to use a shared rendering logic
-2. Ensure both components use the same data flow and section rendering order
-3. Align the styling and theming approaches between both components
-4. Standardize the section components used in both previews
+To achieve consistency across all three preview contexts, we will:
+1. Refactor all preview components to use a shared rendering logic
+2. Ensure all components use the same data flow and section rendering order
+3. Align the styling and theming approaches between all components
+4. Standardize the section components used in all previews
 5. Create a unified data transformation pipeline
+6. Ensure Template Preview uses the same rendering approach as the other previews
 
 ### Current Architecture Diagram
 
@@ -130,6 +142,20 @@ graph TD
 - Uses template configuration to determine section visibility
 - Respects sectionConfig.isVisible property
 
+### 5. Template Preview Differences
+
+**Template Preview (TemplatePreviewPage):**
+- Uses sample content for all templates
+- Has its own rendering implementation separate from both editor and full-screen previews
+- Shows "Kami Mengundang" text in hero section
+- Displays couple names prominently
+- Does not use actual invitation data
+
+**Comparison with Other Previews:**
+- Template preview is more similar to editor preview in text display than full-screen preview
+- Uses different animation implementations
+- Has its own styling approach separate from TemplateRenderer
+
 ## Design Changes
 
 ### 1. Unified Preview Component
@@ -158,7 +184,7 @@ The UnifiedPreview component will:
 
 ### 2. Section Rendering Consistency
 
-Both previews will use the same section components with the same props interface:
+All three previews will use the same section components with the same props interface:
 
 #### Standardized Section Component Interface
 
@@ -177,6 +203,13 @@ interface SectionComponentProps {
 2. **All Section Components:** Standardize prop interface
 3. **Section Rendering Order:** Use template configuration order
 4. **Visibility Handling:** Respect sectionConfig.isVisible property
+5. **TemplatePreviewPage:** Update to use unified rendering approach
+
+#### Template Preview Specific Updates
+
+1. **Replace Manual Rendering:** Replace TemplatePreviewPage's manual section rendering with UnifiedPreview
+2. **Use Sample Content Properly:** Ensure TemplatePreviewPage uses the same sample content generation as other previews
+3. **Consistent Animations:** Align TemplatePreviewPage animations with other previews
 
 ### 3. Data Flow Alignment
 
@@ -197,16 +230,18 @@ graph LR
 ### Phase 1: Component Refactoring (Week 1)
 
 1. **Create UnifiedPreview Component**
-   - Extract shared rendering logic from both preview components
+   - Extract shared rendering logic from all preview components
    - Implement consistent section rendering order
    - Standardize styling and theming application
    - Ensure proper handling of template configurations
+   - Support all three preview contexts (editor, template, full-screen)
 
 2. **Refactor Section Components**
    - Ensure all section components follow the standardized interface
    - Update components to properly handle preview vs. full-screen modes
    - Fix HeroSection to display "The Wedding Of" consistently
    - Standardize section visibility handling
+   - Ensure consistent animation behavior across all contexts
 
 ### Phase 2: Data Flow Alignment (Week 2)
 
@@ -225,6 +260,7 @@ graph LR
 1. **Integrate UnifiedPreview**
    - Replace EditorPreview with UnifiedPreview
    - Update InvitationViewPage to use UnifiedPreview where appropriate
+   - Update TemplatePreviewPage to use UnifiedPreview
    - Ensure backward compatibility during transition
    - Update EditorLayout to pass correct data to UnifiedPreview
 
@@ -234,26 +270,32 @@ graph LR
    - Ensure no breaking changes for existing users
 
 3. **Visual Consistency Testing**
-   - Compare both previews side-by-side
+   - Compare all three previews side-by-side
    - Verify all styling and layout consistency
    - Test with different template configurations
    - Validate responsive behavior consistency
+   - Ensure text content matches across all contexts
 
 ## Section Component Updates
 
 ### Hero Section Consistency
 
-Both previews must display "The Wedding Of" text instead of "Wedding Invitation" to maintain consistency.
+All three previews must display "The Wedding Of" text instead of "Wedding Invitation" or "Kami Mengundang" to maintain consistency.
 
-**Current Issue:** EditorPreview displays couple names and "Kami Mengundang" while full-screen preview shows "The Wedding Of"
+**Current Issues:**
+- EditorPreview displays couple names and "Kami Mengundang"
+- TemplatePreviewPage displays couple names and "Kami Mengundang"
+- Full-Screen Preview shows "The Wedding Of"
 
 **Solution:** 
 1. Update EditorPreview to use the same text as full-screen preview
-2. Ensure HeroSection component displays consistent text in both contexts
-3. Update the couple names display logic to match between previews
+2. Update TemplatePreviewPage to use the same text as full-screen preview
+3. Ensure HeroSection component displays consistent text in all contexts
+4. Update the couple names display logic to match between previews
 
 **Technical Implementation:**
 - Modify EditorPreview to display "The Wedding Of" instead of couple names in the hero section
+- Modify TemplatePreviewPage to display "The Wedding Of" instead of "Kami Mengundang"
 - Ensure couple names are displayed in the same format as the full-screen preview
 - Update the text hierarchy to match the full-screen preview exactly
 
@@ -284,7 +326,7 @@ Both previews must use consistent data transformation logic.
 ### Visual Consistency Tests
 
 1. **Side-by-side Comparison**
-   - Render both previews with identical data
+   - Render all three previews with identical data
    - Verify visual elements match exactly
    - Check responsive behavior consistency
 
@@ -298,6 +340,10 @@ Both previews must use consistent data transformation logic.
    - Check section visibility toggling
    - Validate animation behavior consistency
 
+4. **Cross-Context Testing**
+   - Verify consistency between editor, template, and full-screen previews
+   - Test text content matching across all contexts
+   - Validate that "The Wedding Of" text is displayed consistently
 ### Data Flow Tests
 
 1. **Content Synchronization**
@@ -332,26 +378,30 @@ Both previews must use consistent data transformation logic.
    - Users see exactly what recipients will see
    - Eliminates confusion about final output
    - Builds trust in the editing process
+   - Consistent experience across template browsing, editing, and viewing
 
 2. **Reduced Maintenance**
    - Single implementation for preview logic
    - Easier to update and maintain
    - Reduced code duplication
+   - Single point of truth for preview rendering
 
 3. **Improved Reliability**
    - Consistent rendering across all contexts
    - Reduced chance of discrepancies
    - Easier debugging and issue resolution
+   - Uniform behavior across all preview contexts
 
 ## Success Criteria
 
 1. **Visual Consistency**
-   - Both previews display identical content with the same styling
+   - All three previews display identical content with the same styling
    - All text elements match exactly between previews
    - Section visibility behavior is consistent
+   - Hero section displays "The Wedding Of" text in all contexts
 
 2. **Functional Consistency**
-   - Form data changes reflect immediately in both previews
+   - Form data changes reflect immediately in all previews
    - Template customizations apply uniformly
    - All interactive elements behave consistently
 
@@ -374,17 +424,28 @@ Both previews must use consistent data transformation logic.
 ### Risk 4: User Confusion
 **Mitigation:** Communicate changes clearly and provide transition guidance
 
+### Risk 5: Template Preview Regression
+**Mitigation:** Maintain thorough test coverage for TemplatePreviewPage during refactoring
+
+### Risk 6: Animation Inconsistencies
+**Mitigation:** Standardize animation implementations across all preview contexts
+
 ## Deployment Considerations
 
 ### Rollback Procedures
 
 1. **Component-level Rollback**
    - Maintain backup of original EditorPreview component
+   - Maintain backup of original TemplatePreviewPage component
    - Ability to revert to separate preview implementations
 
 2. **Data Flow Rollback**
    - Preserve original data transformation logic
    - Maintain compatibility with existing form data structures
+
+3. **Template Preview Rollback**
+   - Preserve original TemplatePreviewPage implementation
+   - Maintain ability to revert to manual rendering approach
 
 ### Monitoring Requirements
 
@@ -405,3 +466,13 @@ Both previews must use consistent data transformation logic.
 2. **User Support**
    - Prepare support documentation
    - Train support team on new behavior
+
+### Template Gallery Impact
+
+1. **Template Preview Consistency**
+   - Ensure template previews in the gallery match the actual invitation views
+   - Maintain consistent user experience when browsing templates
+
+2. **User Expectation Management**
+   - Ensure users know what they'll get when they select a template
+   - Reduce discrepancy between preview and actual implementation

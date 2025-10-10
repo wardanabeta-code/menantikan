@@ -1,7 +1,7 @@
-// Wishes and Attendance Confirmation Section Component
-import React, { useState, useEffect } from 'react';
+// Wishes & Messages Section Component (Unified RSVP and Guestbook)
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Heart, User, Calendar } from 'lucide-react';
+import { Send, Heart, User, Calendar, Check } from 'lucide-react';
 import { Button } from '../ui/button';
 import type { TemplateConfig, SectionConfig } from '../../types';
 
@@ -13,14 +13,14 @@ interface WishEntry {
   date: Date;
 }
 
-interface WishesSectionProps {
+interface WishesMessagesSectionProps {
   config: TemplateConfig;
   sectionConfig: SectionConfig;
   isPreview?: boolean;
   onSubmit?: (data: any) => Promise<void>;
 }
 
-const WishesSection: React.FC<WishesSectionProps> = ({
+const WishesMessagesSection: React.FC<WishesMessagesSectionProps> = ({
   config,
   sectionConfig,
   isPreview = false
@@ -189,7 +189,7 @@ const WishesSection: React.FC<WishesSectionProps> = ({
               fontFamily: config.typography?.bodyFont || 'var(--font-body)'
             }}
           >
-            Kirimi kami doa dan ucapan terbaik untuk hari istimewa kami
+            Kirimkan doa terbaik Anda untuk mempelai
           </p>
           <div 
             className="w-24 h-px mx-auto"
@@ -197,7 +197,7 @@ const WishesSection: React.FC<WishesSectionProps> = ({
           />
         </motion.div>
 
-        {/* Wishes Form */}
+        {/* Wishes & RSVP Form */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -215,9 +215,9 @@ const WishesSection: React.FC<WishesSectionProps> = ({
               className="mb-4 p-3 rounded-lg flex items-center"
               style={{ backgroundColor: config.colors?.accent || 'var(--color-accent)' }}
             >
-              <Heart className="w-4 h-4 text-white mr-2" />
+              <Check className="w-4 h-4 text-white mr-2" />
               <p className="text-white text-sm font-medium">
-                Terima kasih! Ucapan Anda telah berhasil dikirim.
+                Terima kasih! Ucapan dan konfirmasi kehadiran Anda telah berhasil dikirim.
               </p>
             </motion.div>
           )}
@@ -236,6 +236,7 @@ const WishesSection: React.FC<WishesSectionProps> = ({
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all"
                 style={{ 
+                  // @ts-ignore
                   '--tw-ring-color': config.colors?.accent || 'var(--color-accent)' 
                 } as React.CSSProperties}
                 placeholder="Masukkan nama lengkap Anda"
@@ -254,6 +255,7 @@ const WishesSection: React.FC<WishesSectionProps> = ({
                 onChange={(e) => handleInputChange('attendance', e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all"
                 style={{ 
+                  // @ts-ignore
                   '--tw-ring-color': config.colors?.accent || 'var(--color-accent)' 
                 } as React.CSSProperties}
               >
@@ -277,6 +279,7 @@ const WishesSection: React.FC<WishesSectionProps> = ({
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent transition-all"
                 placeholder="Tulis ucapan dan doa terbaik Anda untuk mempelai..."
                 style={{ 
+                  // @ts-ignore
                   '--tw-ring-color': config.colors?.accent || 'var(--color-accent)' 
                 } as React.CSSProperties}
               />
@@ -293,13 +296,13 @@ const WishesSection: React.FC<WishesSectionProps> = ({
                 }}
               >
                 <Send className="w-4 h-4 mr-2" />
-                {isSubmitting ? 'Mengirim...' : 'Kirim Ucapan'}
+                {isSubmitting ? 'Mengirim...' : 'Kirim Ucapan & Konfirmasi'}
               </Button>
             </div>
 
             {isPreview && (
               <p className="text-center text-sm text-gray-500 mt-4">
-                Ini adalah pratinjau - pengiriman ucapan dinonaktifkan
+                Ini adalah pratinjau - pengiriman dinonaktifkan
               </p>
             )}
           </form>
@@ -307,7 +310,6 @@ const WishesSection: React.FC<WishesSectionProps> = ({
 
         {/* Wishes Entries */}
         <div className="space-y-6">
-          
           {currentEntries.length > 0 ? (
             <>
               <div className="space-y-6">
@@ -456,4 +458,4 @@ const WishesSection: React.FC<WishesSectionProps> = ({
   );
 };
 
-export default WishesSection;
+export default WishesMessagesSection;

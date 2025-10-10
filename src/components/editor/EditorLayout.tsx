@@ -24,7 +24,6 @@ const EditorLayout: React.FC<EditorLayoutProps> = ({ invitation, onSave, saving 
       
       // Always initialize bride-groom details section
       content.brideGroomDetailsSection = {
-        title: 'Mempelai',
         bride: {
           fullName: invitation.content?.brideGroomDetailsSection?.bride?.fullName || '',
           nickname: invitation.content?.brideGroomDetailsSection?.bride?.nickname || '',
@@ -62,15 +61,12 @@ const EditorLayout: React.FC<EditorLayoutProps> = ({ invitation, onSave, saving 
         
         // Initialize or update hero section
         content.heroSection = {
-          title: invitation.content?.heroSection?.title || 'Wedding Invitation',
-          subtitle: invitation.content?.heroSection?.subtitle || 'We invite you to celebrate with us',
           coupleNames: coupleNames ? [coupleNames] : (invitation.content?.heroSection?.coupleNames || [])
         };
       }
       
       // Auto-populate sacred text section with default Islamic text
       content.sacredTextSection = {
-        title: 'Ayat Suci',
         text: 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu merasa tenang dan tentram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir.',
         source: 'QS. Ar-Rum: 21',
         isIslamic: true
@@ -78,29 +74,22 @@ const EditorLayout: React.FC<EditorLayoutProps> = ({ invitation, onSave, saving 
       
       // Auto-populate story section with default content
       content.storySection = {
-        title: 'Kisah Cinta Kami',
         timeline: invitation.content?.storySection?.timeline || []
       };
       
       // Auto-populate gallery section with default content
       content.gallerySection = {
-        title: 'Perjalanan Kami Bersama',
         images: invitation.content?.gallerySection?.images || [],
         layout: 'grid'
       };
       
       // Auto-populate countdown section based on event details
       content.countdownSection = {
-        title: 'Hitung Mundur Acara',
-        targetEvent: 'ceremony',
-        message: 'Kami menantikan kehadiran Anda di hari istimewa kami'
+        targetEvent: 'ceremony'
       };
       
       // Initialize gift section
       content.giftSection = {
-        title: 'Amplop Digital & Hadiah',
-        subtitle: 'Kehadiran Anda adalah hadiah terbesar bagi kami',
-        message: 'Kami sangat bersyukur atas doa dan dukungan Anda. Jika Anda ingin memberikan hadiah, berikut adalah beberapa cara untuk melakukannya:',
         bankAccounts: invitation.content?.giftSection?.bankAccounts || [],
         ewallets: invitation.content?.giftSection?.ewallets || [],
         shippingAddress: {
@@ -120,9 +109,6 @@ const EditorLayout: React.FC<EditorLayoutProps> = ({ invitation, onSave, saving 
       
       // Initialize wishes section
       content.wishesSection = {
-        title: 'Ucapan & Doa',
-        subtitle: 'Kirimi kami doa dan ucapan terbaik untuk hari istimewa kami',
-        message: 'Setiap ucapan dan doa dari Anda sangat berarti bagi kami. Terima kasih atas kehadiran dan doa restu Anda.',
         entriesPerPage: invitation.content?.wishesSection?.entriesPerPage || 4,
         showForm: invitation.content?.wishesSection?.showForm !== undefined ? invitation.content?.wishesSection?.showForm : true,
         showEntries: invitation.content?.wishesSection?.showEntries !== undefined ? invitation.content?.wishesSection?.showEntries : true
@@ -130,9 +116,6 @@ const EditorLayout: React.FC<EditorLayoutProps> = ({ invitation, onSave, saving 
       
       // Auto-populate closing section with default content
       content.closingSection = {
-        title: 'Penutup',
-        message: 'Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu kepada kedua mempelai.',
-        gratitudeMessage: 'Terima kasih atas segala doa dan perhatian yang telah diberikan. Kami mohon maaf apabila ada kata-kata maupun perbuatan yang kurang berkenan.',
         includeThankYou: true
       };
       

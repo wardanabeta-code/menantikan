@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Menantikan Design System Variables */
+/* Menantakan Design System Variables */
 :root {
   /* Custom spacing scale for invitations */
   --spacing-invitation-xs: 0.5rem;
@@ -164,12 +164,25 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
   }
   
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     font-weight: 600;
     line-height: 1.25;
+  }
+  
+  /* Prevent horizontal scrolling on all elements */
+  * {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  
+  /* Ensure images and media don't cause overflow */
+  img, video, iframe, embed, object {
+    max-width: 100%;
+    height: auto;
   }
 }
 

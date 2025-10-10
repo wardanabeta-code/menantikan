@@ -106,7 +106,8 @@ export type SectionType =
   | 'bride-groom-details'
   | 'sacred-text'
   | 'blessing'
-  | 'wishes';
+  | 'wishes'
+  | 'wishes-messages';
 
 export interface AnimationConfig {
   enabled: boolean;
@@ -164,15 +165,13 @@ export interface InvitationContent {
 }
 
 export interface HeroContent {
-  title: string;
-  subtitle?: string;
   coupleNames?: string[];
   backgroundImage?: string;
   backgroundVideo?: string;
 }
 
 export interface StoryContent {
-  title: string;
+  title?: string;
   timeline: TimelineItem[];
 }
 
@@ -192,7 +191,7 @@ export interface EventDetails {
 
 export interface EventInfo {
   name: string;
-  date: Date;
+  date: Date | string;
   time: string;
   venue: string;
   address: string;
@@ -205,7 +204,7 @@ export interface EventInfo {
 }
 
 export interface GalleryContent {
-  title: string;
+  title?: string;
   images: GalleryImage[];
   layout: 'grid' | 'masonry' | 'carousel';
 }
@@ -225,9 +224,7 @@ export interface CustomSection {
 }
 
 export interface GiftContent {
-  title: string;
-  subtitle?: string;
-  message?: string;
+  // User-related data only (bank accounts, e-wallets, shipping address)
   bankAccounts?: BankAccount[];
   ewallets?: Ewallet[];
   shippingAddress?: ShippingAddress;
@@ -264,9 +261,7 @@ export interface ShippingAddress {
 }
 
 export interface ClosingContent {
-  title: string;
-  message: string;
-  gratitudeMessage?: string;
+  // User-related data only (signature names, background image)
   signatureNames?: string[];
   backgroundImage?: string;
   includeThankYou: boolean;
@@ -456,7 +451,7 @@ export interface CustomTheme {
 }
 
 export interface BrideGroomDetailsContent {
-  title: string;
+  // User-related data only
   bride: BrideGroomDetail;
   groom: BrideGroomDetail;
 }
@@ -473,7 +468,7 @@ export interface BrideGroomDetail {
 }
 
 export interface SacredTextContent {
-  title: string;
+  // User-related data only (the text itself is user-provided)
   text: string;
   source: string;
   isIslamic: boolean;
@@ -481,16 +476,13 @@ export interface SacredTextContent {
 }
 
 export interface CountdownContent {
-  title: string;
+  // User-related data only
   targetEvent: 'ceremony' | 'reception' | 'custom';
   customDate?: Date;
-  message?: string;
 }
 
 export interface WishesContent {
-  title: string;
-  subtitle?: string;
-  message?: string;
+  // User-related configuration only
   showForm: boolean;
   showEntries: boolean;
   entriesPerPage: number;

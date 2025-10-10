@@ -10,8 +10,8 @@ export const sampleTemplates: Template[] = [
     baseConfig: {
       layout: {
         maxWidth: '1200px',
-        padding: '2rem',
-        spacing: '3rem',
+        padding: '0rem',
+        spacing: '0rem',
         borderRadius: '0.5rem'
       },
       colors: {
@@ -48,10 +48,26 @@ export const sampleTemplates: Template[] = [
           style: {}
         },
         {
+          id: 'sacred-text',
+          type: 'sacred-text',
+          isVisible: true,
+          order: 2,
+          content: {},
+          style: {}
+        },
+        {
+          id: 'bride-groom-details',
+          type: 'bride-groom-details',
+          isVisible: true,
+          order: 3,
+          content: {},
+          style: {}
+        },
+        {
           id: 'story',
           type: 'story',
           isVisible: true,
-          order: 2,
+          order: 4,
           content: {},
           style: {}
         },
@@ -59,7 +75,7 @@ export const sampleTemplates: Template[] = [
           id: 'event-details',
           type: 'event-details',
           isVisible: true,
-          order: 3,
+          order: 5,
           content: {},
           style: {}
         },
@@ -67,24 +83,65 @@ export const sampleTemplates: Template[] = [
           id: 'countdown',
           type: 'countdown',
           isVisible: true,
-          order: 4,
-          content: {},
-          style: {}
-        },
-        {
-          id: 'rsvp',
-          type: 'rsvp',
-          isVisible: true,
-          order: 5,
-          content: {},
-          style: {}
-        },
-        {
-          id: 'guestbook',
-          type: 'guestbook',
-          isVisible: true,
           order: 6,
           content: {},
+          style: {}
+        },
+        {
+          id: 'wishes-messages',
+          type: 'wishes-messages',
+          isVisible: true,
+          order: 7,
+          content: {},
+          style: {}
+        },
+        {
+          id: 'gift',
+          type: 'gift',
+          isVisible: true,
+          order: 8,
+          content: {
+            showBankAccounts: true,
+            showEwallets: true,
+            showShippingAddress: true,
+            bankAccounts: [
+              {
+                id: 'bca-1',
+                bankName: 'Bank Central Asia (BCA)',
+                accountNumber: '1234567890',
+                accountName: 'Mempelai Pria'
+              }
+            ],
+            ewallets: [
+              {
+                id: 'gopay-1',
+                provider: 'GoPay',
+                phoneNumber: '081234567890',
+                accountName: 'Mempelai Wanita'
+              }
+            ],
+            shippingAddress: {
+              recipientName: 'Mempelai Pria & Mempelai Wanita',
+              address: 'Jl. Kebahagiaan No. 123, RT 01 RW 02',
+              city: 'Jakarta Selatan',
+              province: 'DKI Jakarta',
+              postalCode: '12345',
+              country: 'Indonesia',
+              phoneNumber: '081234567890',
+              notes: 'Please coordinate delivery time via WhatsApp.'
+            }
+          },
+          style: {}
+        },
+        {
+          id: 'closing',
+          type: 'closing',
+          isVisible: true,
+          order: 9,
+          content: {
+            includeThankYou: true,
+            signatureNames: []
+          },
           style: {}
         }
       ],
@@ -108,9 +165,9 @@ export const sampleTemplates: Template[] = [
     description: 'Soft and dreamy design inspired by blooming gardens',
     baseConfig: {
       layout: {
-        maxWidth: '1200px',
-        padding: '2rem',
-        spacing: '3rem',
+        maxWidth: '100%',
+        padding: '0rem',
+        spacing: '0rem',
         borderRadius: '1rem'
       },
       colors: {
@@ -147,10 +204,26 @@ export const sampleTemplates: Template[] = [
           style: {}
         },
         {
+          id: 'sacred-text',
+          type: 'sacred-text',
+          isVisible: true,
+          order: 2,
+          content: {},
+          style: {}
+        },
+        {
+          id: 'bride-groom-details',
+          type: 'bride-groom-details',
+          isVisible: true,
+          order: 3,
+          content: {},
+          style: {}
+        },
+        {
           id: 'story',
           type: 'story',
           isVisible: true,
-          order: 2,
+          order: 4,
           content: {},
           style: {}
         },
@@ -158,7 +231,7 @@ export const sampleTemplates: Template[] = [
           id: 'event-details',
           type: 'event-details',
           isVisible: true,
-          order: 3,
+          order: 5,
           content: {},
           style: {}
         },
@@ -166,24 +239,66 @@ export const sampleTemplates: Template[] = [
           id: 'gallery',
           type: 'gallery',
           isVisible: true,
-          order: 4,
-          content: {},
-          style: {}
-        },
-        {
-          id: 'rsvp',
-          type: 'rsvp',
-          isVisible: true,
-          order: 5,
-          content: {},
-          style: {}
-        },
-        {
-          id: 'guestbook',
-          type: 'guestbook',
-          isVisible: true,
           order: 6,
           content: {},
+          style: {}
+        },
+        // Countdown section removed to prevent it from appearing after gallery
+        {
+          id: 'wishes-messages',
+          type: 'wishes-messages',
+          isVisible: true,
+          order: 7,
+          content: {},
+          style: {}
+        },
+        {
+          id: 'gift',
+          type: 'gift',
+          isVisible: true,
+          order: 8,
+          content: {
+            showBankAccounts: true,
+            showEwallets: true,
+            showShippingAddress: true,
+            bankAccounts: [
+              {
+                id: 'bca-1',
+                bankName: 'Bank Central Asia (BCA)',
+                accountNumber: '1234567890',
+                accountName: 'Mempelai Pria'
+              }
+            ],
+            ewallets: [
+              {
+                id: 'gopay-1',
+                provider: 'GoPay',
+                phoneNumber: '081234567890',
+                accountName: 'Mempelai Wanita'
+              }
+            ],
+            shippingAddress: {
+              recipientName: 'Mempelai Pria & Mempelai Wanita',
+              address: 'Jl. Kebahagiaan No. 123, RT 01 RW 02',
+              city: 'Jakarta Selatan',
+              province: 'DKI Jakarta',
+              postalCode: '12345',
+              country: 'Indonesia',
+              phoneNumber: '081234567890',
+              notes: 'Please coordinate delivery time via WhatsApp.'
+            }
+          },
+          style: {}
+        },
+        {
+          id: 'closing',
+          type: 'closing',
+          isVisible: true,
+          order: 9,
+          content: {
+            includeThankYou: true,
+            signatureNames: []
+          },
           style: {}
         }
       ],
@@ -262,11 +377,60 @@ export const sampleTemplates: Template[] = [
           style: {}
         },
         {
-          id: 'rsvp',
-          type: 'rsvp',
+          id: 'wishes-messages',
+          type: 'wishes-messages',
           isVisible: true,
           order: 4,
           content: {},
+          style: {}
+        },
+        {
+          id: 'gift',
+          type: 'gift',
+          isVisible: true,
+          order: 5,
+          content: {
+            showBankAccounts: true,
+            showEwallets: true,
+            showShippingAddress: true,
+            bankAccounts: [
+              {
+                id: 'bca-1',
+                bankName: 'Bank Central Asia (BCA)',
+                accountNumber: '1234567890',
+                accountName: 'Ungkapan Terima Kasih'
+              }
+            ],
+            ewallets: [
+              {
+                id: 'gopay-1',
+                provider: 'GoPay',
+                phoneNumber: '081234567890',
+                accountName: 'Ungkapan Terima Kasih'
+              }
+            ],
+            shippingAddress: {
+              recipientName: 'Ungkapan Terima Kasih',
+              address: 'Jl. Kebahagiaan No. 123, RT 01 RW 02',
+              city: 'Jakarta Selatan',
+              province: 'DKI Jakarta',
+              postalCode: '12345',
+              country: 'Indonesia',
+              phoneNumber: '081234567890',
+              notes: 'Please coordinate delivery time via WhatsApp.'
+            }
+          },
+          style: {}
+        },
+        {
+          id: 'closing',
+          type: 'closing',
+          isVisible: true,
+          order: 6,
+          content: {
+            includeThankYou: true,
+            signatureNames: []
+          },
           style: {}
         }
       ],
@@ -337,11 +501,60 @@ export const sampleTemplates: Template[] = [
           style: {}
         },
         {
-          id: 'rsvp',
-          type: 'rsvp',
+          id: 'wishes-messages',
+          type: 'wishes-messages',
           isVisible: true,
           order: 3,
           content: {},
+          style: {}
+        },
+        {
+          id: 'gift',
+          type: 'gift',
+          isVisible: true,
+          order: 4,
+          content: {
+            showBankAccounts: true,
+            showEwallets: true,
+            showShippingAddress: true,
+            bankAccounts: [
+              {
+                id: 'bca-1',
+                bankName: 'Bank Central Asia (BCA)',
+                accountNumber: '1234567890',
+                accountName: 'Acara Perusahaan'
+              }
+            ],
+            ewallets: [
+              {
+                id: 'gopay-1',
+                provider: 'GoPay',
+                phoneNumber: '081234567890',
+                accountName: 'Acara Perusahaan'
+              }
+            ],
+            shippingAddress: {
+              recipientName: 'Acara Perusahaan',
+              address: 'Jl. Kebahagiaan No. 123, RT 01 RW 02',
+              city: 'Jakarta Selatan',
+              province: 'DKI Jakarta',
+              postalCode: '12345',
+              country: 'Indonesia',
+              phoneNumber: '081234567890',
+              notes: 'Please coordinate delivery time via WhatsApp.'
+            }
+          },
+          style: {}
+        },
+        {
+          id: 'closing',
+          type: 'closing',
+          isVisible: true,
+          order: 5,
+          content: {
+            includeThankYou: true,
+            signatureNames: []
+          },
           style: {}
         }
       ],
@@ -401,16 +614,8 @@ export const sampleTemplates: Template[] = [
           isVisible: true,
           order: 1,
           content: {
-            title: 'You are cordially invited',
-            subtitle: 'to celebrate the wedding of',
             coupleNames: ['Sarah Elizabeth', 'Michael James'],
-            backgroundImage: '/images/wedding-hero-bg.jpg',
-            ornaments: {
-              showDecorations: true,
-              decorativeElements: ['floral-border', 'golden-rings', 'heart-divider'],
-              textShadow: true,
-              overlayOpacity: 0.3
-            }
+            backgroundImage: '/images/wedding-hero-bg.jpg'
           },
           style: {
             backgroundColor: '#fefefe',
@@ -420,17 +625,31 @@ export const sampleTemplates: Template[] = [
             textAlign: 'center',
             padding: '6rem 2rem',
             position: 'relative',
-            overflow: 'hidden',
-            minHeight: '100vh'
+            overflow: 'hidden'
           }
+        },
+        {
+          id: 'sacred-text',
+          type: 'sacred-text',
+          isVisible: true,
+          order: 2,
+          content: {},
+          style: {}
+        },
+        {
+          id: 'bride-groom-details',
+          type: 'bride-groom-details',
+          isVisible: true,
+          order: 3,
+          content: {},
+          style: {}
         },
         {
           id: 'story',
           type: 'story',
           isVisible: true,
-          order: 2,
+          order: 4,
           content: {
-            title: 'Our Love Story',
             timeline: [
               {
                 id: '1',
@@ -464,11 +683,11 @@ export const sampleTemplates: Template[] = [
           id: 'event-details',
           type: 'event-details',
           isVisible: true,
-          order: 3,
+          order: 5,
           content: {
             ceremony: {
               name: 'Wedding Ceremony',
-              date: new Date('2024-06-15T16:00:00'),
+              date: '2024-06-15T16:00:00',
               time: '4:00 PM',
               venue: 'St. Mary\'s Chapel',
               address: '123 Wedding Lane, Garden City, NY 11530',
@@ -481,7 +700,7 @@ export const sampleTemplates: Template[] = [
             },
             reception: {
               name: 'Wedding Reception',
-              date: new Date('2024-06-15T18:30:00'),
+              date: '2024-06-15T18:30:00',
               time: '6:30 PM',
               venue: 'Garden Villa Ballroom',
               address: '456 Reception Drive, Garden City, NY 11530',
@@ -502,11 +721,8 @@ export const sampleTemplates: Template[] = [
           id: 'gallery',
           type: 'gallery',
           isVisible: true,
-          order: 4,
+          order: 6,
           content: {
-            title: 'Our Journey Together',
-            subtitle: 'Moments that led us here',
-            layout: 'masonry',
             images: [
               {
                 id: '1',
@@ -544,61 +760,23 @@ export const sampleTemplates: Template[] = [
                 caption: 'Sunset walks on the beach',
                 thumbnail: '/images/gallery-6-thumb.jpg'
               }
-            ]
+            ],
+            layout: 'masonry'
           },
           style: {
             backgroundColor: '#f9f7f4',
             padding: '3rem 2rem'
           }
         },
+        // Countdown section removed to prevent it from appearing after gallery
         {
-          id: 'countdown',
-          type: 'countdown',
-          isVisible: true,
-          order: 5,
-          content: {
-            title: 'Days Until Our Wedding',
-            targetDate: new Date('2024-06-15T16:00:00'),
-            message: 'We can\'t wait to celebrate with you!'
-          },
-          style: {
-            backgroundColor: '#ffffff',
-            padding: '3rem 2rem',
-            textAlign: 'center'
-          }
-        },
-        {
-          id: 'rsvp',
-          type: 'rsvp',
-          isVisible: true,
-          order: 6,
-          content: {
-            title: 'Please RSVP',
-            subtitle: 'We hope you can join us on our special day',
-            deadline: new Date('2024-05-15'),
-            message: 'Your presence would make our day even more special. Please let us know if you can attend.',
-            requirePlusOnes: true,
-            maxPlusOnes: 2,
-            dietaryOptions: ['None', 'Vegetarian', 'Vegan', 'Gluten-Free', 'Other']
-          },
-          style: {
-            backgroundColor: '#f9f7f4',
-            padding: '3rem 2rem'
-          }
-        },
-        {
-          id: 'guestbook',
-          type: 'guestbook',
+          id: 'wishes-messages',
+          type: 'wishes-messages',
           isVisible: true,
           order: 7,
-          content: {
-            title: 'Leave us a message',
-            subtitle: 'Share your wishes for the happy couple',
-            placeholder: 'Write your message here...',
-            maxLength: 500
-          },
+          content: {},
           style: {
-            backgroundColor: '#ffffff',
+            backgroundColor: '#f9f7f4',
             padding: '3rem 2rem'
           }
         },
@@ -608,9 +786,6 @@ export const sampleTemplates: Template[] = [
           isVisible: true,
           order: 8,
           content: {
-            title: 'Gift & Contribution',
-            subtitle: 'Your presence is the greatest gift, but if you wish to honor us with a gift',
-            message: 'We are grateful for your love and support. If you would like to contribute to our new beginning or send a gift, here are the details:',
             showBankAccounts: true,
             showEwallets: true,
             showShippingAddress: true,
@@ -670,9 +845,6 @@ export const sampleTemplates: Template[] = [
           isVisible: true,
           order: 9,
           content: {
-            title: 'Penutup',
-            message: 'Merupakan suatu kehormatan dan kebahagiaan bagi kami, apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu kepada kami.',
-            gratitudeMessage: 'Tanpa kehadiran dan doa restu dari keluarga serta sahabat sekalian, pernikahan kami bukanlah apa-apa. Terima kasih telah menjadi bagian dari hari bahagia kami.',
             includeThankYou: true,
             signatureNames: ['Sarah Elizabeth', 'Michael James']
           },
